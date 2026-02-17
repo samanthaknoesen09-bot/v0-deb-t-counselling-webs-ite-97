@@ -1,0 +1,27 @@
+{
+  "name": "DCSA Debt Counsellors - Professional Debt Help South Africa",
+  "short_name": "DCSA",
+  "description": "Professional debt counselling and debt clear solutions in South Africa",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/images/dcsa-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/dcsa-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "business"],
+  "lang": "en-ZA",
+  "dir": "ltr"
+}

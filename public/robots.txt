@@ -1,0 +1,23 @@
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Prioritize important pages for crawlers
+Crawl-delay: 0
+
+# Prioritized calculator pages
+Allow: /calculator
+Allow: /calculators
+Allow: /interest-calculator
+Allow: /get-started
+Allow: /pricing
+Allow: /faq
+Allow: /blog
+
+# Block admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://www.dcsam.co.za/sitemap.xml
+Sitemap: https://www.dcsam.co.za/sitemap-html
