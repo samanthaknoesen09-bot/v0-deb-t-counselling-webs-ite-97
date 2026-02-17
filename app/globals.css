@@ -1,37 +1,25 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
- 
 :root {
-  /* Warm, approachable backgrounds */
-  --background: oklch(0.99 0.005 85);
-  --foreground: oklch(0.15 0 0);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0 0);
+  --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0 0);
-  
-  /* Maroon as primary brand color (matching DCSA logo DC) */
-  --primary: oklch(0.35 0.12 15);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  
-  /* Warm secondary for balance */
-  --secondary: oklch(0.95 0.02 85);
-  --secondary-foreground: oklch(0.20 0 0);
-  
-  --muted: oklch(0.96 0.01 85);
-  --muted-foreground: oklch(0.45 0 0);
-  
-  /* Accent with warm peach/coral tones */
-  --accent: oklch(0.92 0.04 50);
-  --accent-foreground: oklch(0.20 0 0);
-  
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.90 0.01 85);
-  --input: oklch(0.98 0.005 85);
-  --ring: oklch(0.35 0.12 15);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -47,7 +35,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
- 
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -84,7 +72,6 @@
 }
 
 @theme inline {
-  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -122,77 +109,168 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
- 
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "liga" 1, "calt" 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
+}
 
-  /* Better heading hierarchy with SA personality */
-  h1, h2, h3 {
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
+/* Adding animation keyframes manually since tw-animate-css was removed */
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
 
-  h1 {
-    @apply text-5xl md:text-6xl lg:text-7xl;
+@keyframes fade-out {
+  from {
+    opacity: 1;
   }
+  to {
+    opacity: 0;
+  }
+}
 
-  h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl;
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100%);
   }
+  to {
+    transform: translateY(0);
+  }
+}
 
-  h3 {
-    @apply text-2xl md:text-3xl;
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
   }
+  to {
+    transform: translateY(0);
+  }
+}
 
-  /* Body text - generous line height for stressed readers */
-  p {
-    line-height: 1.7;
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
   }
+  to {
+    transform: translateX(0);
+  }
+}
 
-  /* Mobile touch target optimization - min 48px height for inputs and buttons */
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="number"],
-  input[type="password"],
-  input[type="url"],
-  input[type="search"],
-  textarea,
-  select,
-  button {
-    @apply min-h-[48px];
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
   }
+  to {
+    transform: translateX(0);
+  }
+}
 
-  /* Larger buttons for mobile */
-  @media (max-width: 768px) {
-    button {
-      @apply min-h-[52px];
-    }
-    
-    /* Stacked buttons need more vertical spacing on mobile */
-    .flex.flex-col button:not(:last-child) {
-      @apply mb-4;
-    }
+@keyframes zoom-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
   }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
-  /* Smooth scrolling for better UX */
-  html {
-    scroll-behavior: smooth;
+@keyframes zoom-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
   }
+  to {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
 
-  /* Focus states for accessibility with personality */
-  :focus-visible {
-    outline: 3px solid oklch(0.55 0.15 240);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
+.animate-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.animate-out {
+  animation: fade-out 0.2s ease-in;
+}
+
+/* Blog content styles for rich text */
+.blog-content h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--foreground);
+}
+
+.blog-content h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+
+.blog-content p {
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0.75rem 0;
+}
+
+.blog-content a {
+  color: #8B4513;
+  text-decoration: underline;
+}
+
+.blog-content a:hover {
+  color: #6B3410;
+}
+
+.blog-content strong {
+  font-weight: 700;
+}
+
+.blog-content em {
+  font-style: italic;
+}
+
+.blog-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.blog-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.blog-content li {
+  margin: 0.25rem 0;
+}
+
+.blog-content blockquote {
+  border-left: 4px solid #8B4513;
+  padding-left: 1rem;
+  font-style: italic;
+  margin: 1rem 0;
+  color: var(--muted-foreground);
+}
+
+.blog-content img {
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  max-width: 100%;
+  height: auto;
 }

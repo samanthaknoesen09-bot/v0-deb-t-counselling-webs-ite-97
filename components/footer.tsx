@@ -2,11 +2,11 @@
 
 import type React from "react"
 import Image from "next/image"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Phone, Mail, MapPin, Facebook, CheckCircle, AlertCircle, Linkedin, Instagram } from "lucide-react"
+import { Phone, Mail, MapPin, Facebook, CheckCircle, AlertCircle } from "lucide-react"
 import { useState } from "react"
-import PhoneContact from "@/components/phone-contact"
 
 const TikTokIcon = () => (
   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -79,28 +79,23 @@ Time: ${new Date().toLocaleTimeString()}`
               Professional debt counselling services helping South Africans achieve financial freedom. Take the first
               step towards a debt-free future today.
             </p>
-            <div className="bg-primary/10 border-l-4 border-primary/50 rounded-r-lg p-4 max-w-md">
-              <p className="text-background/90 text-sm italic leading-relaxed">
-                "Remember, your journey to financial freedom starts with understanding your money. You're not alone — we're here to guide you every step of the way."
-              </p>
-            </div>
             <div className="space-y-3">
-              <PhoneContact /> {/* Declared PhoneContact component */}
+              <a href="tel:+27719006298" className="flex items-center space-x-3 hover:text-primary transition-colors">
+                <Phone className="w-5 h-5 text-primary" />
+                <span>071 900 6298</span>
+              </a>
               <a href="mailto:info@dcsam.co.za" className="flex items-center space-x-3 hover:text-primary transition-colors">
                 <Mail className="w-5 h-5 text-primary" />
                 <span>info@dcsam.co.za</span>
               </a>
               <a 
-                href="https://www.google.com/maps/search/?api=1&query=81+6th+Avenue,+Newton+Park,+Gqeberha,+South+Africa" 
+                href="https://www.google.com/maps/search/?api=1&query=81+6th+Avenue+Newton+Park+Port+Elizabeth+South+Africa" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-start space-x-3 hover:text-[#4DB6AC] transition-colors group cursor-pointer"
-                title="Open in Google Maps"
+                className="flex items-center space-x-3 hover:text-primary transition-colors"
               >
-                <MapPin className="w-5 h-5 text-[#4DB6AC] mt-1 flex-shrink-0" />
-                <span className="leading-relaxed group-hover:underline">
-                  81 6th Avenue, Newton Park, Gqeberha
-                </span>
+                <MapPin className="w-5 h-5 text-primary" />
+                <span>81 6th Avenue Newton Park Port Elizabeth</span>
               </a>
             </div>
           </div>
@@ -108,16 +103,6 @@ Time: ${new Date().toLocaleTimeString()}`
           <div className="space-y-6">
             <h4 className="text-lg font-semibold">Quick Links</h4>
             <ul className="space-y-3">
-              <li>
-                <a href="/get-started" className="text-background/80 hover:text-primary transition-colors">
-                  Get Started
-                </a>
-              </li>
-              <li>
-                <a href="/interest-calculator" className="text-background/80 hover:text-primary transition-colors">
-                  Interest Calculator
-                </a>
-              </li>
               <li>
                 <a href="#services" className="text-background/80 hover:text-primary transition-colors">
                   Our Services
@@ -139,28 +124,8 @@ Time: ${new Date().toLocaleTimeString()}`
                 </a>
               </li>
               <li>
-                <a href="/faq" className="text-background/80 hover:text-primary transition-colors">
-                  FAQ
-                </a>
-              </li>
-              <li>
                 <a href="/#booking" className="text-background/80 hover:text-primary transition-colors">
                   Book Consultation
-                </a>
-              </li>
-              <li>
-                <a href="/pricing" className="text-background/80 hover:text-primary transition-colors">
-                  Pricing & Fees
-                </a>
-              </li>
-              <li>
-                <a href="/privacy-policy" className="text-background/80 hover:text-primary transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="/terms" className="text-background/80 hover:text-primary transition-colors">
-                  Terms & Conditions
                 </a>
               </li>
               <li>
@@ -214,92 +179,36 @@ Time: ${new Date().toLocaleTimeString()}`
             </form>
             <div className="flex space-x-4">
               <a
-                href="https://www.facebook.com/DCSamDebt"
+                href="https://www.facebook.com/DebtClearDCSA"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-background/80 hover:text-primary transition-colors"
-                aria-label="Follow us on Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://www.linkedin.com/company/dcsam-dcsa"
+                href="https://www.tiktok.com/@dcsa_debtclearsa?is_from_webapp=1&sender_device=pc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-background/80 hover:text-primary transition-colors"
-                aria-label="Connect with us on LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.tiktok.com/@dcsam_debt"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-background/80 hover:text-primary transition-colors"
-                aria-label="Follow us on TikTok"
               >
                 <TikTokIcon />
               </a>
               <a
-                href="https://www.instagram.com/debthelp_with_dcsam"
+                href="https://threads.net/@dcsadebtcounsellors"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-background/80 hover:text-primary transition-colors"
-                aria-label="Follow us on Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <ThreadsIcon />
               </a>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-background/20 mt-12 pt-8 space-y-8">
-          {/* Google Maps Embed */}
-          <div className="w-full">
-            <h4 className="text-lg font-semibold mb-4 text-background">Find Us</h4>
-            <div className="rounded-lg overflow-hidden border-2 border-background/20 shadow-lg">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.7879845932744!2d25.595891!3d-33.966111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e7ad6a966656a61%3A0x4367e69da17840c!2s81%206th%20Ave%2C%20Newton%20Park%2C%20Gqeberha%2C%206045%2C%20South%20Africa!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
-                width="100%"
-                height="300"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="DCSA Office Location - 81 6th Avenue, Newton Park, Gqeberha"
-              />
-            </div>
-            <p className="text-background/70 text-sm mt-3 text-center">
-              Click on the map to get directions or{" "}
-              <a 
-                href="https://www.google.com/maps/dir/?api=1&destination=81+6th+Avenue,+Newton+Park,+Gqeberha,+South+Africa" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-primary hover:underline font-medium"
-              >
-                open in Google Maps
-              </a>
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 text-sm text-background/70">
-            <div>
-              <h4 className="font-semibold text-background mb-2">NCR Registration</h4>
-              <p>DCSA is a registered debt counsellor with the National Credit Regulator (NCR).</p>
-              <p className="font-medium mt-1">Registration Number: NCRDC3995</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-2">
-                <span className="text-primary">DC</span><span className="text-black">SA</span>
-              </h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                Your trusted partner for debt counselling and financial freedom
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 pt-4">
-            <p className="text-background/60 text-sm">© 2026 DCSA - Debt Clear South Africa. All rights reserved.</p>
+        <div className="border-t border-background/20 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-background/60 text-sm">© 2026 DCSA. All rights reserved. NCR Registration: NCRDC3995</p>
             <div className="flex space-x-6 text-sm">
               <a href="/privacy" className="text-background/60 hover:text-primary transition-colors">
                 Privacy Policy

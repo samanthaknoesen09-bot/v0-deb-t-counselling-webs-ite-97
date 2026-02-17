@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: "DCSA Blog - Latest Debt Counselling Tips & Financial Advice",
     description:
       "Expert debt counselling insights and financial tips from DCSA. Stay informed about debt management strategies and success stories.",
-    url: "https://www.dcsam.co.za/blog",
+    url: "https://dcsa.co.za/blog",
     type: "website",
     images: [
       {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     images: ["/images/dcsa-logo.jpg"],
   },
   alternates: {
-    canonical: "https://www.dcsam.co.za/blog",
+    canonical: "https://dcsa.co.za/blog",
   },
 }
 

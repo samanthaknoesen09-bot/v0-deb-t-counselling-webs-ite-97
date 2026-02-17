@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: "Free Budget Calculator | DCSA Debt Counsellors",
     description:
       "Calculate your monthly expenses and debt-to-income ratio with DCSA's free budget calculator. Get instant results and personalized debt management recommendations.",
-    url: "https://www.dcsam.co.za/calculator",
+    url: "https://dcsa.co.za/calculator",
     type: "website",
     images: [
       {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     images: ["/images/dcsa-logo.jpg"],
   },
   alternates: {
-    canonical: "https://www.dcsam.co.za/calculator",
+    canonical: "https://dcsa.co.za/calculator",
   },
 }
 

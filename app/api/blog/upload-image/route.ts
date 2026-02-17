@@ -1,5 +1,5 @@
+import { put } from "@vercel/blob"
 import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
 
 // Simple auth check
 function isAuthenticated(request: NextRequest): boolean {
@@ -37,38 +37,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "File too large. Maximum size is 5MB." }, { status: 400 })
     }
 
-    const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`
+    const filename = `blog-images/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`
     
-    // Convert File to ArrayBuffer for Supabase Storage
-    const arrayBuffer = await file.arrayBuffer()
-
-    // Get Supabase client
-    const supabase = await createClient()
-
-    // Upload to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase
-      .storage
-      .from('blog-images')
-      .upload(filename, arrayBuffer, {
-        contentType: file.type,
-        upsert: false
-      })
-
-    if (uploadError) {
-      console.error("Error uploading image:", uploadError)
-      return NextResponse.json({ error: "Failed to upload image" }, { status: 500 })
-    }
-
-    // Get public URL
-    const { data: { publicUrl } } = supabase
-      .storage
-      .from('blog-images')
-      .getPublicUrl(filename)
+    const blob = await put(filename, file, {
+      access: "public",
+      contentType: file.type,
+    })
 
     return NextResponse.json({ 
       success: true, 
-      url: publicUrl,
-      filename: filename
+      url: blob.url,
+      filename: blob.pathname
     })
   } catch (error) {
     console.error("Error uploading image:", error)

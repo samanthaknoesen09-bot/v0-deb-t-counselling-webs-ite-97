@@ -11,11 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Calendar, Clock, Phone, Video, MapPin } from "lucide-react"
 
-interface BookingCalendarProps {
-  defaultService?: string
-}
-
-export function BookingCalendar({ defaultService = "" }: BookingCalendarProps) {
+export function BookingCalendar() {
   const [selectedDate, setSelectedDate] = useState("")
   const [selectedTime, setSelectedTime] = useState("")
   const [appointmentType, setAppointmentType] = useState("")
@@ -25,7 +21,7 @@ export function BookingCalendar({ defaultService = "" }: BookingCalendarProps) {
     name: "",
     phone: "",
     email: "",
-    service: defaultService,
+    service: "",
     message: "",
   })
 

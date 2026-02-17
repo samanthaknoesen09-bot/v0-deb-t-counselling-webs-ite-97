@@ -126,7 +126,7 @@ export default function HtmlSitemap() {
             <section className="mt-12 p-6 bg-muted rounded-lg">
               <h2 className="text-2xl font-semibold mb-4">About DCSA</h2>
               <p className="text-muted-foreground">
-                DCSA is a professional debt counselling service dedicated to helping South Africans
+                DCSA is a professional debt counselling service with 17+ years of experience helping South Africans
                 achieve financial freedom. We are NCR registered debt counsellors providing personalized debt management
                 plans, budget planning, credit repair, and financial guidance. Our judgment-free approach ensures you
                 receive compassionate support throughout your debt-free journey.

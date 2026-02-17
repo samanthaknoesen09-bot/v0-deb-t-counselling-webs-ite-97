@@ -2,22 +2,8 @@
 User-agent: *
 Allow: /
 
-# Prioritize important pages for crawlers
-Crawl-delay: 0
+# Sitemap location
+Sitemap: https://dcsa.co.za/sitemap.xml
 
-# Prioritized calculator pages
-Allow: /calculator
-Allow: /calculators
-Allow: /interest-calculator
-Allow: /get-started
-Allow: /pricing
-Allow: /faq
-Allow: /blog
-
-# Block admin areas
-Disallow: /admin/
-Disallow: /api/
-
-# Sitemaps
-Sitemap: https://www.dcsam.co.za/sitemap.xml
-Sitemap: https://www.dcsam.co.za/sitemap-html
+# Crawl-delay for polite crawling
+Crawl-delay: 1

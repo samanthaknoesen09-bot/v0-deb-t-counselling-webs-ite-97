@@ -68,7 +68,6 @@ async function postToFacebook(title: string, excerpt: string, blogUrl: string, i
 export async function GET() {
   try {
     const { blobs } = await list({ prefix: "blogs/" })
-    const now = new Date()
     
     const posts = await Promise.all(
       blobs
@@ -84,17 +83,10 @@ export async function GET() {
         })
     )
     
-    // Filter out scheduled posts that haven't been published yet (for public view)
-    // Admin can see all posts by checking auth
-    const publishedPosts = posts.filter(post => {
-      if (!post.scheduledFor) return true
-      return new Date(post.scheduledFor) <= now
-    })
-    
     // Sort by date, newest first
-    publishedPosts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     
-    return NextResponse.json({ posts: publishedPosts })
+    return NextResponse.json({ posts })
   } catch (error) {
     console.error("Error listing blog posts:", error)
     return NextResponse.json({ posts: [] })
@@ -109,7 +101,7 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json()
-    const { title, content, excerpt, category, featuredImage, scheduledFor } = body
+    const { title, content, excerpt, category, featuredImage } = body
     
     if (!title || !content) {
       return NextResponse.json({ error: "Title and content are required" }, { status: 400 })
@@ -123,9 +115,6 @@ export async function POST(request: NextRequest) {
     // Strip HTML tags for excerpt generation
     const plainTextContent = content.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
     
-    const now = new Date().toISOString()
-    const publishDate = scheduledFor || now
-    
     const post = {
       id: `post-${Date.now()}`,
       slug,
@@ -135,10 +124,8 @@ export async function POST(request: NextRequest) {
       category: category || "General",
       author: "DCSA Team",
       featuredImage: featuredImage || "",
-      scheduledFor: scheduledFor || null,
-      createdAt: now,
-      updatedAt: now,
-      publishedAt: !scheduledFor ? now : null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     }
     
     const filename = `blogs/${slug}-${Date.now()}.json`
@@ -147,54 +134,26 @@ export async function POST(request: NextRequest) {
       contentType: "application/json",
     })
     
-    let message = "Blog post created successfully."
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.dcsam.co.za"
-    const blogUrl = `${baseUrl}/blog/${slug}`
+    // Post to Facebook
+    const blogUrl = `https://www.dcsam.co.za/blog`
+    const fbResult = await postToFacebook(
+      title, 
+      post.excerpt, 
+      blogUrl, 
+      featuredImage || undefined
+    )
     
-    // Only post to Facebook and search engines if not scheduled for future
-    if (!scheduledFor || new Date(scheduledFor) <= new Date()) {
-      // Post to Facebook
-      const fbResult = await postToFacebook(
-        title,
-        post.excerpt,
-        blogUrl,
-        featuredImage
-      )
-      
-      if (fbResult.success) {
-        message += " Posted to Facebook."
-      } else {
-        message += ` Facebook posting failed: ${fbResult.error}`
-      }
-
-      // Auto-submit to search engines (Google, Bing, Edge, Chrome)
-      try {
-        const searchEngineResponse = await fetch(`${baseUrl}/api/submit-to-search-engines`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            url: blogUrl,
-            type: "blog"
-          })
-        })
-
-        if (searchEngineResponse.ok) {
-          const searchResult = await searchEngineResponse.json()
-          message += " Submitted to Google, Bing, Edge, and Chrome for indexing."
-        }
-      } catch (error) {
-        console.error("Search engine submission error:", error)
-        message += " (Search engine submission failed)"
-      }
+    let message = "Blog post created successfully."
+    if (fbResult.success) {
+      message += " Also posted to Facebook!"
     } else {
-      message += ` Scheduled for ${new Date(scheduledFor).toLocaleString("en-ZA")}`
+      message += ` Facebook posting failed: ${fbResult.error}`
     }
     
     return NextResponse.json({ 
       success: true, 
       post: { ...post, blobUrl: blob.url },
+      facebookPost: fbResult,
       message
     })
   } catch (error) {

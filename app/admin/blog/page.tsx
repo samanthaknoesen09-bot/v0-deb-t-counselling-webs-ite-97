@@ -59,8 +59,6 @@ export default function AdminBlogPage() {
   const [excerpt, setExcerpt] = useState("")
   const [category, setCategory] = useState("General")
   const [featuredImage, setFeaturedImage] = useState("")
-  const [scheduledDate, setScheduledDate] = useState("")
-  const [scheduledTime, setScheduledTime] = useState("")
 
   useEffect(() => {
     // Check authentication
@@ -188,19 +186,13 @@ export default function AdminBlogPage() {
     }
 
     try {
-      // Construct scheduled datetime if provided
-      let scheduledFor = null
-      if (scheduledDate && scheduledTime) {
-        scheduledFor = new Date(`${scheduledDate}T${scheduledTime}`).toISOString()
-      }
-      
       const response = await fetch("/api/blog", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Basic ${authToken}`,
         },
-        body: JSON.stringify({ title, content, excerpt, category, featuredImage, scheduledFor }),
+        body: JSON.stringify({ title, content, excerpt, category, featuredImage }),
       })
 
       const data = await response.json()
@@ -208,16 +200,12 @@ export default function AdminBlogPage() {
       if (response.ok) {
         const fbStatus = data.facebookPost?.success 
           ? "Also posted to Facebook!" 
-          : scheduledFor 
-            ? `Scheduled for ${new Date(scheduledFor).toLocaleString("en-ZA")}`
-            : `Facebook: ${data.facebookPost?.error || "Not posted"}`
+          : `Facebook: ${data.facebookPost?.error || "Not posted"}`
         setMessage({ type: "success", text: `Blog post created successfully! ${fbStatus}` })
         setTitle("")
         setExcerpt("")
         setCategory("General")
         setFeaturedImage("")
-        setScheduledDate("")
-        setScheduledTime("")
         if (editorRef.current) editorRef.current.innerHTML = ""
         fetchPosts()
       } else {
@@ -529,32 +517,6 @@ export default function AdminBlogPage() {
                       placeholder="Brief summary of the post (auto-generated if left empty)"
                       rows={2}
                     />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Schedule Publishing (optional)</Label>
-                    <p className="text-sm text-muted-foreground">Leave empty to publish immediately</p>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="scheduledDate">Date</Label>
-                        <Input
-                          id="scheduledDate"
-                          type="date"
-                          value={scheduledDate}
-                          onChange={(e) => setScheduledDate(e.target.value)}
-                          min={new Date().toISOString().split('T')[0]}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="scheduledTime">Time</Label>
-                        <Input
-                          id="scheduledTime"
-                          type="time"
-                          value={scheduledTime}
-                          onChange={(e) => setScheduledTime(e.target.value)}
-                        />
-                      </div>
-                    </div>
                   </div>
 
                   <div className="space-y-2">

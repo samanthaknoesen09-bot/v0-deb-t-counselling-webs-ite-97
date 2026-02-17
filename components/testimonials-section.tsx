@@ -1,9 +1,5 @@
-"use client"
-
-import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react"
+import { Star, Quote } from "lucide-react"
 
 const testimonials = [
   {
@@ -37,34 +33,10 @@ const testimonials = [
 ]
 
 export function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
-
-  // Auto-rotate every 6 seconds
-  useEffect(() => {
-    if (isPaused) return
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 6000)
-
-    return () => clearInterval(interval)
-  }, [isPaused])
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-  }
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }
-
-  const currentTestimonial = testimonials[currentIndex]
-
   return (
     <section id="testimonials" className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold text-foreground mb-4 text-balance">
             Real People, Real Stories, Real Hope
           </h2>
@@ -74,79 +46,35 @@ export function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <Card 
-            className="bg-card border-2 border-border shadow-xl relative"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            <div className="absolute top-4 right-4 opacity-10">
-              <Quote className="w-16 h-16 text-primary" />
-            </div>
-            <CardContent className="p-8 md:p-12">
-              <div className="space-y-6">
-                <p className="text-xl md:text-2xl text-card-foreground leading-relaxed text-pretty">
-                  "{currentTestimonial.story}"
-                </p>
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {testimonials.map((testimonial, index) => (
+            <Card key={index} className="bg-card border-border hover:shadow-lg transition-shadow duration-300">
+              <CardContent className="p-8">
+                <div className="flex items-start space-x-4">
+                  <Quote className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
+                  <div className="space-y-4">
+                    <p className="text-card-foreground leading-relaxed text-pretty">"{testimonial.story}"</p>
 
-                <div className="flex items-center space-x-1">
-                  {[...Array(currentTestimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                  ))}
-                </div>
+                    <div className="flex items-center space-x-1">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                      ))}
+                    </div>
 
-                <div className="flex items-center justify-between pt-6 border-t border-border">
-                  <div>
-                    <div className="font-bold text-lg text-card-foreground">{currentTestimonial.name}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-base font-bold text-primary">{currentTestimonial.savings}</div>
-                    <div className="text-sm text-muted-foreground">Achievement</div>
+                    <div className="flex items-center justify-between pt-4 border-t border-border">
+                      <div>
+                        <div className="font-semibold text-card-foreground">{testimonial.name}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-semibold text-primary">{testimonial.savings}</div>
+                        <div className="text-xs text-muted-foreground">Achievement</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={prevTestimonial}
-              className="rounded-full bg-transparent"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-
-            <div className="flex items-center gap-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all ${
-                    index === currentIndex 
-                      ? "w-8 bg-primary" 
-                      : "w-2 bg-primary/30 hover:bg-primary/50"
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={nextTestimonial}
-              className="rounded-full bg-transparent"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          </div>
-
-          <p className="text-center text-sm text-muted-foreground mt-4">
-            {currentIndex + 1} of {testimonials.length} success stories
-          </p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>

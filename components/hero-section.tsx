@@ -27,10 +27,10 @@ export function HeroSection() {
                 className="bg-primary hover:bg-primary/90 text-primary-foreground"
                 onClick={() =>
                   (window.location.href =
-                    "mailto:info@dcsam.co.za?subject=I'd like to chat about my options&body=Hi DCSA team,%0D%0A%0D%0AI'd love to have a friendly, no-pressure chat about how debt counselling could help my situation. Please reach out when you can.%0D%0A%0D%0AThanks!")
+                    "mailto:info@dcsam.co.za?subject=I'm Ready to Start My Journey&body=Hi DCSA team, I'm ready to take control of my finances and would love to speak with someone who understands my situation. Please contact me for a free, no-judgment consultation.")
                 }
               >
-                {"Let's Have a Chat"}
+                I'm Ready to Start
               </Button>
               <Button
                 size="lg"
@@ -80,7 +80,7 @@ export function HeroSection() {
                     className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground"
                     onClick={() => document.getElementById("calculator")?.scrollIntoView({ behavior: "smooth" })}
                   >
-                    {"Show Me My Options - It's Free"}
+                    Show Me My Options - Free
                   </Button>
                 </div>
               </div>

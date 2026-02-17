@@ -107,10 +107,10 @@ export default function BlogClientPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-4 text-balance">
-              Real Talk About Money (Coffee Break Edition)
+              DCSA Blog - Financial Tips & Advice
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-              Hey friend! Welcome to our blog where we share honest financial advice without the boring jargon. Think of it as money conversations over coffee with your supportive (and slightly funny) debt counsellor friends. Pull up a chair!
+              Stay informed with our latest insights, tips, and updates on debt management, financial planning, and credit repair. We're here to help you on your journey to financial freedom.
             </p>
             <div className="mt-6">
               <Button
@@ -131,34 +131,59 @@ export default function BlogClientPage() {
               </div>
             ) : (
               posts.map((post) => (
-                <a key={post.id} href={`/blog/${post.slug}`} className="block group">
-                  <Card className="bg-card border-border hover:border-[#4DB6AC] hover:shadow-lg transition-all overflow-hidden cursor-pointer">
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
-                            <Badge className="bg-[#FFE5D9] text-[#0D3B66] border-[#4DB6AC]/30">{post.category}</Badge>
-                            <div className="flex items-center gap-1">
-                              <Calendar className="w-4 h-4" />
-                              <span>{formatDate(post.createdAt)}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Clock className="w-4 h-4" />
-                              <span>{getReadTime(post.content)}</span>
-                            </div>
-                          </div>
-                          <h2 className="text-2xl font-bold text-[#0D3B66] group-hover:text-[#4DB6AC] transition-colors mb-2">
-                            {post.title}
-                          </h2>
-                          <p className="text-muted-foreground line-clamp-2">
-                            {post.excerpt}
-                          </p>
+                <Card key={post.id} className="bg-card border-border hover:shadow-lg transition-shadow overflow-hidden">
+                  {post.featuredImage && (
+                    <div className="w-full h-64 overflow-hidden">
+                      <img 
+                        src={post.featuredImage || "/placeholder.svg"} 
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <CardHeader>
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <User className="w-4 h-4" />
+                          <span>{post.author}</span>
                         </div>
-                        <ArrowRight className="w-6 h-6 text-[#4DB6AC] group-hover:translate-x-1 transition-transform flex-shrink-0 mt-1" />
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{formatDate(post.createdAt)}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          <span>{getReadTime(post.content)}</span>
+                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </a>
+                      <Badge className="bg-[#8B4513] text-white">{post.category}</Badge>
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground">{post.title}</h2>
+                  </CardHeader>
+                  <CardContent>
+                    {/* Render HTML content with proper styling */}
+                    <div 
+                      className="blog-content max-w-none text-card-foreground mb-6"
+                      dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
+
+                    <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-border">
+                      <Button
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                        onClick={() =>
+                          window.open(
+                            `https://wa.me/27719006298?text=Hi, I read your blog post "${post.title}" and would like to learn more about your services.`,
+                            "_blank",
+                          )
+                        }
+                      >
+                        Get Help Now
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               ))
             )}
           </div>
@@ -166,9 +191,10 @@ export default function BlogClientPage() {
           <div className="mt-16 text-center">
             <Card className="bg-primary/5 border-primary/20 max-w-2xl mx-auto">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-foreground mb-4">Ready for That Conversation We Mentioned?</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-4">Ready to Take Control of Your Finances?</h3>
                 <p className="text-muted-foreground mb-6">
-                  Reading is great (thanks for being here!), but sometimes you just need to talk to an actual human who gets it. Our female-led team is here - no judgment, just genuine support and real solutions tailored to YOUR life.
+                  Don't let debt control your life. Our experienced debt counsellors are ready to help you find the best
+                  solution for your unique situation.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button

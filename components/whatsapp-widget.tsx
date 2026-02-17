@@ -8,7 +8,7 @@ import { MessageCircle, X, Phone } from "lucide-react"
 export function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false)
 
-  const whatsappNumber = "27661937596" // 066 193 7596 in international format (hidden from display)
+  const whatsappNumber = "27719006298" // 071 900 6298 in international format
 
   const quickMessages = [
     "Hi, I need help with debt counselling",
