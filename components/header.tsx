@@ -35,6 +35,10 @@ export function Header() {
                 Budget Calculator
               </a>
 
+              <a href="/blog" className="text-foreground hover:text-primary transition-colors font-medium">
+                Blog
+              </a>
+
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors font-medium">
                   <span>Menu</span>
@@ -63,12 +67,17 @@ export function Header() {
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <a href="/blog" className="w-full font-medium">
-                      Resources
+                      Blog
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <a href="/blog" className="w-full">
                       • Financial Education
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <a href="/blog" className="w-full">
+                      • Debt Counselling Tips
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem>

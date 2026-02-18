@@ -1,7 +1,7 @@
 "use client"
 
-import  from ".."
+import { Home } from "@/components/home"
 
-export default function SyntheticV0PageForDeployment() {
-  return < />
+export default function Page() {
+  return <Home />
 }
