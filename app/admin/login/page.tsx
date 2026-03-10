@@ -1,7 +1,5 @@
 "use client"
-
 import React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -33,35 +31,38 @@ export default function AdminLoginPage() {
     } else {
       setError("Invalid username or password")
     }
-    
+
     setLoading(false)
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-100 to-stone-200 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
+      <Card className="w-full max-w-md shadow-xl border-stone-200">
+        <CardHeader className="text-center space-y-1">
           <div className="flex justify-center mb-4">
             <Image
               src="/images/dcsa-logo.png"
-              alt="DCSA Logo"
+              alt="DCSA Debt Counselling & Credit Repair"
               width={150}
               height={60}
               className="h-16 w-auto"
+              priority
             />
           </div>
           <CardTitle className="text-2xl font-bold text-stone-800">Admin Login</CardTitle>
-          <CardDescription>Sign in to manage your blog posts</CardDescription>
+          <CardDescription>
+            Sign in to manage blog posts, SEO settings, and metadata
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             {error && (
-              <Alert variant="destructive">
+              <Alert variant="destructive" className="bg-red-50 border-red-200 text-red-800">
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            
+
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <div className="relative">
@@ -69,15 +70,15 @@ export default function AdminLoginPage() {
                 <Input
                   id="username"
                   type="text"
-                  placeholder="Enter username"
+                  placeholder="Enter admin username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 focus-visible:ring-[#8B4513]"
                   required
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
@@ -85,26 +86,28 @@ export default function AdminLoginPage() {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter password"
+                  placeholder="Enter admin password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 focus-visible:ring-[#8B4513]"
                   required
                 />
               </div>
             </div>
-            
+
             <Button 
               type="submit" 
-              className="w-full bg-[#8B4513] hover:bg-[#6B3410]"
+              className="w-full bg-[#8B4513] hover:bg-[#6B3410] text-white font-semibold transition-colors"
               disabled={loading}
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Verifying..." : "Sign In to Dashboard"}
             </Button>
           </form>
-          
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            <p>This area is for authorized administrators only.</p>
+
+          <div className="mt-8 text-center">
+            <p className="text-xs text-muted-foreground uppercase tracking-widest font-medium">
+              Secure Administration Area
+            </p>
           </div>
         </CardContent>
       </Card>
