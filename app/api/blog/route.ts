@@ -24,7 +24,13 @@ async function postToFacebook(title: string, excerpt: string, blogUrl: string, i
   }
   
   try {
-    const message = `${title}\n\n${excerpt}\n\nRead more: ${blogUrl}\n\n#DCSA #DebtCounselling #DebtReview #FinancialFreedom #CreditRepair #DebtHelp`
+    const message = `${title}
+
+${excerpt}
+
+Read more: ${blogUrl}
+
+#DCSA #DebtCounselling #DebtReview #FinancialFreedom #CreditRepair #DebtHelp`
     
     let endpoint = `https://graph.facebook.com/v18.0/${pageId}/feed`
     const params: Record<string, string> = {
@@ -101,13 +107,13 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json()
-    const { title, content, excerpt, category, featuredImage } = body
+    const { title, seoTitle, slug: providedSlug, metaDescription, content, excerpt, category, featuredImage } = body
     
     if (!title || !content) {
       return NextResponse.json({ error: "Title and content are required" }, { status: 400 })
     }
     
-    const slug = title
+    const slug = providedSlug || title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "")
@@ -119,6 +125,8 @@ export async function POST(request: NextRequest) {
       id: `post-${Date.now()}`,
       slug,
       title,
+      seoTitle: seoTitle || title,
+      metaDescription: metaDescription || excerpt || plainTextContent.substring(0, 160),
       content,
       excerpt: excerpt || plainTextContent.substring(0, 200) + "...",
       category: category || "General",
@@ -135,9 +143,9 @@ export async function POST(request: NextRequest) {
     })
     
     // Post to Facebook
-    const blogUrl = `https://www.dcsam.co.za/blog`
+    const blogUrl = `https://www.dcsam.co.za/blog/${slug}`
     const fbResult = await postToFacebook(
-      title, 
+      post.seoTitle, 
       post.excerpt, 
       blogUrl, 
       featuredImage || undefined
