@@ -4,9 +4,10 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, User, ArrowRight, ExternalLink } from "lucide-react"
+import { Calendar, Clock, User, ArrowRight, ExternalLink, Calculator, MessageCircle, Phone } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import Link from "next/link"
 
 interface BlogPost {
   id: string
@@ -102,7 +103,6 @@ export default function BlogClientPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-
       <main className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -112,7 +112,7 @@ export default function BlogClientPage() {
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
               Stay informed with our latest insights, tips, and updates on debt management, financial planning, and credit repair. We're here to help you on your journey to financial freedom.
             </p>
-            <div className="mt-6">
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
               <Button
                 className="bg-[#1877F2] hover:bg-[#166FE5] text-white"
                 onClick={() => window.open("https://www.facebook.com/DebtClearDCSA", "_blank")}
@@ -120,107 +120,180 @@ export default function BlogClientPage() {
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Follow Us on Facebook
               </Button>
+              <Button
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary/10"
+                onClick={() => window.location.href = "/#calculator"}
+              >
+                <Calculator className="w-4 h-4 mr-2" />
+                Try Our Debt Calculator
+              </Button>
             </div>
           </div>
 
-          <div className="space-y-8">
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                <p className="mt-4 text-muted-foreground">Loading latest posts...</p>
-              </div>
-            ) : (
-              posts.map((post) => (
-                <Card key={post.id} className="bg-card border-border hover:shadow-lg transition-shadow overflow-hidden">
-                  {post.featuredImage && (
-                    <div className="w-full h-64 overflow-hidden">
-                      <img 
-                        src={post.featuredImage || "/placeholder.svg"} 
-                        alt={post.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
-                  <CardHeader>
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <User className="w-4 h-4" />
-                          <span>{post.author}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          <span>{formatDate(post.createdAt)}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          <span>{getReadTime(post.content)}</span>
-                        </div>
-                      </div>
-                      <Badge className="bg-[#8B4513] text-white">{post.category}</Badge>
-                    </div>
-                    <h2 className="text-2xl font-bold text-foreground">{post.title}</h2>
-                  </CardHeader>
-                  <CardContent>
-                    {/* Render HTML content with proper styling */}
-                    <div 
-                      className="blog-content max-w-none text-card-foreground mb-6"
-                      dangerouslySetInnerHTML={{ __html: post.content }}
-                    />
-
-                    <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-border">
-                      <Button
-                        className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                        onClick={() =>
-                          window.open(
-                            `https://wa.me/27719006298?text=Hi, I read your blog post "${post.title}" and would like to learn more about your services.`,
-                            "_blank",
-                          )
-                        }
-                      >
-                        Get Help Now
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            )}
-          </div>
-
-          <div className="mt-16 text-center">
-            <Card className="bg-primary/5 border-primary/20 max-w-2xl mx-auto">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-foreground mb-4">Ready to Take Control of Your Finances?</h3>
-                <p className="text-muted-foreground mb-6">
-                  Don't let debt control your life. Our experienced debt counsellors are ready to help you find the best
-                  solution for your unique situation.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                    onClick={() =>
-                      (window.location.href =
-                        "mailto:info@dcsam.co.za?subject=Free Consultation Request&body=Hi DCSA team, I would like to schedule a free consultation to discuss my debt situation.")
-                    }
-                  >
-                    Email for Free Consultation
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      window.open("https://wa.me/27719006298?text=Hi, I need help with debt counselling", "_blank")
-                    }
-                  >
-                    WhatsApp Us Now
-                  </Button>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="lg:col-span-2 space-y-8">
+              {loading ? (
+                <div className="text-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                  <p className="mt-4 text-muted-foreground">Loading latest posts...</p>
                 </div>
-              </CardContent>
-            </Card>
+              ) : (
+                posts.map((post) => (
+                  <Card key={post.id} className="bg-card border-border hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+                    {post.featuredImage && (
+                      <Link href={`/blog/${post.slug}`} className="w-full h-64 overflow-hidden block">
+                        <img 
+                          src={post.featuredImage} 
+                          alt={post.title}
+                          className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                        />
+                      </Link>
+                    )}
+                    <CardHeader>
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <User className="w-4 h-4" />
+                            <span>{post.author}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            <span>{formatDate(post.createdAt)}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            <span>{getReadTime(post.content)}</span>
+                          </div>
+                        </div>
+                        <Badge className="bg-[#8B4513] text-white">{post.category}</Badge>
+                      </div>
+                      <Link href={`/blog/${post.slug}`}>
+                        <h2 className="text-2xl font-bold text-foreground hover:text-primary transition-colors">{post.title}</h2>
+                      </Link>
+                    </CardHeader>
+                    <CardContent>
+                      <div 
+                        className="blog-content line-clamp-4 text-card-foreground mb-6"
+                        dangerouslySetInnerHTML={{ __html: post.content }}
+                      />
+                      <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-border">
+                        <Button
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                          asChild
+                        >
+                          <Link href={`/blog/${post.slug}`}>
+                            Read Full Article
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </Link>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => window.location.href = "/#calculator"}
+                        >
+                          <Calculator className="w-4 h-4 mr-2" />
+                          Try Calculator
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          className="bg-[#25D366] hover:bg-[#20ba5a] text-white border-none"
+                          onClick={() => 
+                            window.open(
+                              `https://wa.me/27719006298?text=Hi, I read your blog post "${post.title}" and would like to learn more.`,
+                              "_blank",
+                            )
+                          }
+                        >
+                          <MessageCircle className="w-4 h-4 mr-2" />
+                          WhatsApp Us
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+
+            {/* Sidebar Funnel CTAs */}
+            <div className="space-y-8">
+              <Card className="bg-primary/5 border-primary/20 sticky top-24">
+                <CardHeader>
+                  <h3 className="text-xl font-bold text-foreground">Financial Tools</h3>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="p-4 bg-card rounded-lg border border-border">
+                    <h4 className="font-bold mb-2 flex items-center gap-2">
+                      <Calculator className="w-5 h-5 text-primary" />
+                      Debt Calculator
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      See how much you can save on your monthly debt repayments today.
+                    </p>
+                    <Button 
+                      className="w-full" 
+                      onClick={() => window.location.href = "/#calculator"}
+                    >
+                      Calculate Savings
+                    </Button>
+                  </div>
+
+                  <div className="p-4 bg-card rounded-lg border border-border">
+                    <h4 className="font-bold mb-2 flex items-center gap-2">
+                      <MessageCircle className="w-5 h-5 text-[#25D366]" />
+                      WhatsApp Help
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Chat with a certified debt counsellor for immediate assistance.
+                    </p>
+                    <Button 
+                      className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white border-none"
+                      onClick={() => window.open("https://wa.me/27719006298", "_blank")}
+                    >
+                      Start Chat
+                    </Button>
+                  </div>
+
+                  <div className="p-4 bg-card rounded-lg border border-border">
+                    <h4 className="font-bold mb-2 flex items-center gap-2">
+                      <Phone className="w-5 h-5 text-primary" />
+                      Call for Advice
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Prefer to speak? Call us for a free, confidential consultation.
+                    </p>
+                    <Button 
+                      className="w-full" 
+                      variant="outline"
+                      onClick={() => window.location.href = "tel:+27719006298"}
+                    >
+                      071 900 6298
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Related Articles in Sidebar */}
+              <Card className="border-border">
+                <CardHeader>
+                  <h3 className="text-lg font-bold">Recommended Reading</h3>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {posts.slice(0, 4).map((p) => (
+                    <Link key={p.id} href={`/blog/${p.slug}`} className="block group">
+                      <h4 className="text-sm font-semibold group-hover:text-primary transition-colors line-clamp-2">
+                        {p.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {formatDate(p.createdAt)}
+                      </p>
+                    </Link>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </main>
-
       <Footer />
     </div>
   )
